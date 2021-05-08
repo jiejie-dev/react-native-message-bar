@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { Component } from 'react'
+import { PureComponent } from 'react'
+import * as React from 'react'
 import {
   Animated,
   ColorValue,
@@ -19,7 +20,7 @@ const windowHeight = Dimensions.get('window').height
 export type AlertType = 'success' | 'error' | 'warning' | 'info'
 export type Position = 'top' | 'bottom'
 
-export interface MessageBarProps {
+export type MessageBarProps = {
   alertType?: AlertType
   position?: Position
   title?: string
@@ -88,7 +89,7 @@ const defaultProps = {
   title: 'title',
   message: 'message',
   avatar: null,
-  alertType: 'info',
+  alertType: 'info' as AlertType,
   duration: 3000,
 
   /* Hide setters */
@@ -156,13 +157,13 @@ const defaultProps = {
   },
 
   /* Position of the alert and Animation Type the alert is shown */
-  position: 'top',
+  position: 'top' as Position,
   // animationType: props.animationType,
   useNativeDriver: false,
 }
 
-export default class MessageBar extends Component<
-  MessageBarProps & typeof defaultProps,
+export default class MessageBar extends PureComponent<
+  MessageBarProps,
   MessageBarProps
 > {
   animatedValue: Animated.Value
@@ -171,7 +172,7 @@ export default class MessageBar extends Component<
   timeoutHide: null | ReturnType<typeof setTimeout>
   animationTypeTransform: Animated.AnimatedProps<ViewStyle>[]
 
-  constructor(props: MessageBarProps & typeof defaultProps) {
+  constructor(props: MessageBarProps) {
     super(props)
 
     this.animatedValue = new Animated.Value(0)
@@ -183,19 +184,19 @@ export default class MessageBar extends Component<
     this.state = this.getStateByProps(props)
   }
 
-  componentWillReceiveProps(nextProps: MessageBarProps & typeof defaultProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: MessageBarProps) {
     this.setNewState(nextProps)
   }
 
-  setNewState(state: MessageBarProps & typeof defaultProps) {
+  setNewState(state: MessageBarProps) {
     // Set the new state, this is triggered when the props of this MessageBar changed
     this.setState(this.getStateByProps(state))
 
     // Apply the colors of the alert depending on its alertType
-    this._applyAlertStylesheet(state.alertType)
+    this._applyAlertStylesheet(state.alertType || defaultProps.alertType)
 
     // Override the opposition style position regarding the state position in order to have the alert sticks that position
-    this._changeOffsetByPosition(state.position)
+    this._changeOffsetByPosition(state.position || defaultProps.position)
   }
 
   getStateByProps(props: MessageBarProps) {
@@ -309,7 +310,7 @@ export default class MessageBar extends Component<
     // Display the alert by animating it from the top of the screen
     // Auto-Hide it after a delay set in the state
     Animated.timing(this.animatedValue, {
-      useNativeDriver: this.props.useNativeDriver,
+      useNativeDriver: this.props.useNativeDriver || false,
       toValue: 1,
       duration: this.state.durationToShow,
     }).start(() => this._showMessageBarAlertComplete())
@@ -350,7 +351,7 @@ export default class MessageBar extends Component<
 
     // Animate the alert to hide it to the top of the screen
     Animated.timing(this.animatedValue, {
-      useNativeDriver: this.props.useNativeDriver,
+      useNativeDriver: this.props.useNativeDriver || false,
       toValue: 0,
       duration: this.state.durationToHide,
     }).start(() => this._hideMessageBarAlertComplete())
@@ -455,17 +456,17 @@ export default class MessageBar extends Component<
     switch (position) {
       case 'top':
         this.setState({
-          viewBottomOffset: undefined,
+          viewBottomOffset: undefined as any,
         })
         break
       case 'bottom':
         this.setState({
-          viewTopOffset: undefined,
+          viewTopOffset: undefined as any,
         })
         break
       default:
         this.setState({
-          viewBottomOffset: undefined,
+          viewBottomOffset: undefined as any,
         })
         break
     }
@@ -627,5 +628,3 @@ export default class MessageBar extends Component<
     }
   }
 }
-
-module.exports = MessageBar

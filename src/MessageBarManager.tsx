@@ -1,4 +1,5 @@
 import MessageBar, { MessageBarProps } from './MessageBar'
+import { ComponentProps } from './utils'
 
 var _currentMessageBarAlert: MessageBar | null = null
 
@@ -10,7 +11,7 @@ export const unregisterMessageBar = () => {
   _currentMessageBarAlert = null
 }
 
-export const showAlert = (newState?: MessageBarProps) => {
+export const showAlert = (newState?: ComponentProps<typeof MessageBar>) => {
   if (_currentMessageBarAlert === null) {
     return
   }
