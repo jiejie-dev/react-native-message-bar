@@ -1,5 +1,4 @@
 import MessageBar, { MessageBarProps } from './MessageBar'
-import { ComponentProps } from './utils'
 
 var _currentMessageBarAlert: MessageBar | null = null
 
@@ -11,7 +10,7 @@ export const unregisterMessageBar = () => {
   _currentMessageBarAlert = null
 }
 
-export const showAlert = (newState?: ComponentProps<typeof MessageBar>) => {
+export const showAlert = (newState?: MessageBarProps) => {
   if (_currentMessageBarAlert === null) {
     return
   }
@@ -28,7 +27,7 @@ export const showAlert = (newState?: ComponentProps<typeof MessageBar>) => {
       // Clear current state
       _currentMessageBarAlert?.setNewState({} as any)
 
-      _currentMessageBarAlert?.setNewState(newState!)
+      _currentMessageBarAlert?.setNewState(newState as any)
 
       if (_currentMessageBarAlert?.notifyAlertHiddenCallback) {
         _currentMessageBarAlert!.notifyAlertHiddenCallback = undefined

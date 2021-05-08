@@ -20,62 +20,62 @@ export type AlertType = 'success' | 'error' | 'warning' | 'info'
 export type Position = 'top' | 'bottom'
 
 export interface MessageBarProps {
-  alertType: AlertType
-  position: Position
-  title: string
-  message: string
-  avatar: any
-  duration: number
-  shouldHideAfterDelay: boolean
-  shouldHideOnTap: boolean
-  onTapped: () => void
-  onShow: () => void
-  onHide: () => void
-  stylesheetInfo: ViewStyle
-  stylesheetSuccess: ViewStyle
-  stylesheetWarning: ViewStyle
-  stylesheetError: ViewStyle
-  stylesheetExtra: ViewStyle
-  durationToShow: number
-  durationToHide: number
-  viewTopOffset:
+  alertType?: AlertType
+  position?: Position
+  title?: string
+  message?: string
+  avatar?: any
+  duration?: number
+  shouldHideAfterDelay?: boolean
+  shouldHideOnTap?: boolean
+  onTapped?: () => void
+  onShow?: () => void
+  onHide?: () => void
+  stylesheetInfo?: ViewStyle
+  stylesheetSuccess?: ViewStyle
+  stylesheetWarning?: ViewStyle
+  stylesheetError?: ViewStyle
+  stylesheetExtra?: ViewStyle
+  durationToShow?: number
+  durationToHide?: number
+  viewTopOffset?:
     | string
     | number
     | Animated.Value
     | Animated.AnimatedInterpolation
     | undefined
-  viewBottomOffset:
+  viewBottomOffset?:
     | string
     | number
     | Animated.Value
     | Animated.AnimatedInterpolation
     | undefined
-  viewLeftOffset:
+  viewLeftOffset?:
     | string
     | number
     | Animated.Value
     | Animated.AnimatedInterpolation
     | undefined
-  viewRightOffset:
+  viewRightOffset?:
     | string
     | number
     | Animated.Value
     | Animated.AnimatedInterpolation
     | undefined
-  viewTopInset: number
-  viewBottomInset: number
-  viewLeftInset: number
-  viewRightInset: number
-  titleNumberOfLines: number
-  messageNumberOfLines: number
-  titleStyle: TextStyle
-  messageStyle: TextStyle
-  avatarStyle: ImageStyle
-  animationType: any
-  backgroundColor: ColorValue | string | undefined
-  strokeColor: ColorValue
+  viewTopInset?: number
+  viewBottomInset?: number
+  viewLeftInset?: number
+  viewRightInset?: number
+  titleNumberOfLines?: number
+  messageNumberOfLines?: number
+  titleStyle?: TextStyle
+  messageStyle?: TextStyle
+  avatarStyle?: ImageStyle
+  animationType?: any
+  backgroundColor?: ColorValue | string | undefined
+  strokeColor?: ColorValue
 
-  useNativeDriver: boolean
+  useNativeDriver?: boolean
 }
 
 const defaultProps = {
@@ -183,11 +183,11 @@ export default class MessageBar extends Component<
     this.state = this.getStateByProps(props)
   }
 
-  componentWillReceiveProps(nextProps: MessageBarProps) {
+  componentWillReceiveProps(nextProps: MessageBarProps & typeof defaultProps) {
     this.setNewState(nextProps)
   }
 
-  setNewState(state: MessageBarProps) {
+  setNewState(state: MessageBarProps & typeof defaultProps) {
     // Set the new state, this is triggered when the props of this MessageBar changed
     this.setState(this.getStateByProps(state))
 
@@ -265,9 +265,9 @@ export default class MessageBar extends Component<
 
       /* Number of Lines for Title and Message */
       titleNumberOfLines:
-        props.titleNumberOfLines == undefined ? 1 : props.titleNumberOfLines,
+        props.titleNumberOfLines === undefined ? 1 : props.titleNumberOfLines,
       messageNumberOfLines:
-        props.messageNumberOfLines == undefined
+        props.messageNumberOfLines === undefined
           ? 2
           : props.messageNumberOfLines,
 
@@ -421,23 +421,23 @@ export default class MessageBar extends Component<
 
     switch (alertType) {
       case 'success':
-        backgroundColor = this.state.stylesheetSuccess.backgroundColor
+        backgroundColor = this.state.stylesheetSuccess?.backgroundColor
         strokeColor = (this.state.stylesheetSuccess as any).strokeColor
         break
       case 'error':
-        backgroundColor = this.state.stylesheetError.backgroundColor
+        backgroundColor = this.state.stylesheetError?.backgroundColor
         strokeColor = (this.state.stylesheetError as any).strokeColor
         break
       case 'warning':
-        backgroundColor = this.state.stylesheetWarning.backgroundColor
+        backgroundColor = this.state.stylesheetWarning?.backgroundColor
         strokeColor = (this.state.stylesheetWarning as any).strokeColor
         break
       case 'info':
-        backgroundColor = this.state.stylesheetInfo.backgroundColor
+        backgroundColor = this.state.stylesheetInfo?.backgroundColor
         strokeColor = (this.state.stylesheetInfo as any).strokeColor
         break
       default:
-        backgroundColor = this.state.stylesheetExtra.backgroundColor
+        backgroundColor = this.state.stylesheetExtra?.backgroundColor
         strokeColor = (this.state.stylesheetExtra as any).strokeColor
         break
     }
