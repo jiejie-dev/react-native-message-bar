@@ -1,26 +1,14 @@
 import * as React from 'react'
-import { Button, NativeModules, StyleSheet, Text, View } from 'react-native'
 
-export const addOne = (input: number) => input + 1
+import MessageBarComponent from './MessageBar'
+import MessageBarManager from './MessageBarManager'
+import { ComponentProps } from './utils'
 
-export const Counter = () => {
-  const [count, setCount] = React.useState(0)
+const MessageBar = (props: ComponentProps<typeof MessageBarManager>) => (
+  <MessageBarComponent {...props} />
+)
 
-  return (
-    <View style={styles.container}>
-      <Text>You pressed {count} times</Text>
-      <Button onPress={() => setCount(addOne(count))} title='Press Me' />
-    </View>
-  )
+export default {
+  MessageBar,
+  MessageBarManager,
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 200,
-  },
-})
-
-export default NativeModules.RNMessageBarModule
