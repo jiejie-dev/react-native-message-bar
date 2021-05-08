@@ -185,7 +185,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-message-bar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleDynamicVersion
